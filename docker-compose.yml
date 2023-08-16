@@ -27,5 +27,41 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
-volumes:
-  mysql-data:
+
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment: 
+      POSTGRES_DB: blog
+      POSTGRES_USER: root 
+      POSTGRES_PASSWORD: password 
+
+
+
+
+  pgadmin:
+      image: dpage/pgadmin4
+      container_name: pgAdmin
+      ports:
+        - "5051:80"
+      depends_on:
+        - db 
+      environment:
+        PGADMIN_DEFAULT_EMAIL: youremail@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: password 
+
+# networks:
+#   laravel-network:
+#     driver: bridge
+# change the env file to your desired value
+# DB_CONNECTION=pgsql
+# DB_HOST=db
+# DB_PORT=5432
+# DB_DATABASE=blog
+# DB_USERNAME=same_as_of_the_yml file(postgres service)
+# DB_PASSWORD=same_as_of_the_yml file(postgres service)
